@@ -1,14 +1,21 @@
 import React from 'react';
 import { line } from 'd3-shape';
 
-import { data } from '../../constants';
+import { dataRequest } from '../../constants';
+import { transformData } from '../../utils';
 
 import { IBar } from '../../types';
 
 // line color chart
 const lineColor = '#fff000';
 
+const { keys } = transformData(dataRequest);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const Line = function ({ bars, xScale, yScale }: any) {
+  const barsFilter = bars.filter(
+    (itemBar: { data: { id: string } }) => itemBar.data.id === keys[0]
+  );
   const lineGenerator = line<IBar>()
     .x(bar => xScale(bar.data.indexValue) + bar.width / 2)
     .y(bar => yScale(bar.data.data.lineChart));
@@ -16,12 +23,12 @@ export const Line = function ({ bars, xScale, yScale }: any) {
   return (
     <>
       <path
-        d={lineGenerator(bars.slice(0, data.length)) as string}
+        d={lineGenerator(barsFilter) as string}
         fill="none"
         stroke={lineColor}
         style={{ pointerEvents: 'none' }}
       />
-      {bars.map((bar: IBar) => (
+      {/* {bars.map((bar: IBar) => (
         <circle
           key={bar.key}
           cx={xScale(bar.data.indexValue) + bar.width / 2}
@@ -31,7 +38,7 @@ export const Line = function ({ bars, xScale, yScale }: any) {
           stroke={lineColor}
           style={{ pointerEvents: 'none' }}
         />
-      ))}
+      ))} */}
     </>
   );
 };

@@ -1,11 +1,9 @@
 import { ComputedBarDatum } from '@nivo/bar';
 
 export interface IChartData {
-  x: string;
-  v: number;
-  v1: number;
-  v2: number;
-  lineChart: number;
+  label: string;
+  lineChart: number | string;
+  [key: string]: number | string;
 }
 
 export type IBar = ComputedBarDatum<IChartData>;
