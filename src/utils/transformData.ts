@@ -44,6 +44,20 @@ export const transformData = (data: IChartDataRequest): IItemResponse => {
     });
   });
 
+  dataChart.sort((current, next) => {
+    const timestampDateCurrent = new Date(current.label).getTime();
+    const timestampDateNext = new Date(next.label).getTime();
+
+    if (timestampDateCurrent < timestampDateNext) {
+      return -1;
+    }
+    if (timestampDateCurrent > timestampDateNext) {
+      return 1;
+    }
+
+    return 0;
+  });
+
   dataChart.forEach((item, index) => {
     const findItemEqual = lineChartData.findIndex(
       line => line.label === item.label
@@ -60,20 +74,6 @@ export const transformData = (data: IChartDataRequest): IItemResponse => {
         lineChart: '0',
       };
     }
-  });
-
-  dataChart.sort((current, next) => {
-    const timestampDateCurrent = new Date(current.label).getTime();
-    const timestampDateNext = new Date(next.label).getTime();
-
-    if (timestampDateCurrent < timestampDateNext) {
-      return -1;
-    }
-    if (timestampDateCurrent > timestampDateNext) {
-      return 1;
-    }
-
-    return 0;
   });
 
   dataChart.forEach((item, index) => {
