@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chart } from '../components';
+import { Chart, ChartLine, ChartBar } from '../components';
 
 const Home: React.FC = function () {
   return (
@@ -7,12 +7,15 @@ const Home: React.FC = function () {
       style={{
         display: 'flex',
         alignItems: 'center',
+        flexDirection: 'column',
         justifyContent: 'center',
         minHeight: '100vh',
         backgroundColor: '#808080',
       }}
     >
       <Chart />
+      <ChartLine />
+      <ChartBar />
     </div>
   );
 };
