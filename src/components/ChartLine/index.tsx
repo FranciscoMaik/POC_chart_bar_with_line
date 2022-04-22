@@ -9,10 +9,13 @@ import { Container } from './styles';
 export const ChartLine: React.FC = function () {
   const data = transformDataLine(dataRequest);
 
+  const colors = data.map(itemColors => itemColors.color);
+
   return (
     <Container>
       <ResponsiveLine
         data={data}
+        colors={colors}
         margin={{
           top: 10,
           bottom: 56,
