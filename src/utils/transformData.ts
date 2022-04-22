@@ -1,13 +1,11 @@
 import { IChartDataRequest, IChartData } from '../types';
 
-interface IAssistantArrayLine {
-  label: string;
-  lineChart: number | string;
-}
+type IAssistantArrayLine = IChartData;
 
 interface IItemResponse {
   data: IChartData[];
   keys: Array<string>;
+  maxValueArray: number;
 }
 
 export const transformData = (data: IChartDataRequest): IItemResponse => {
@@ -59,22 +57,31 @@ export const transformData = (data: IChartDataRequest): IItemResponse => {
   });
 
   dataChart.forEach((item, index) => {
-    const findItemEqual = lineChartData.findIndex(
-      line => line.label === item.label
+    const findEqualDate = lineChartData.findIndex(
+      itemLine => itemLine.label === item.label
     );
 
-    if (findItemEqual !== -1) {
-      dataChart[findItemEqual] = {
-        ...item,
-        lineChart: lineChartData[findItemEqual].lineChart,
-      };
-    } else {
+    if (findEqualDate !== -1) {
       dataChart[index] = {
         ...item,
-        lineChart: '0',
+        lineChart: lineChartData[findEqualDate].lineChart,
       };
     }
   });
+
+  const getEqualIndexArrayLineAndBar = lineChartData.findIndex(
+    item => item.label === dataChart[dataChart.length - 1].label
+  );
+
+  for (
+    let index = getEqualIndexArrayLineAndBar;
+    index < lineChartData.length;
+    index += 1
+  ) {
+    const element = lineChartData[index];
+
+    dataChart.push(element);
+  }
 
   dataChart.forEach((item, index) => {
     const getKeys = Object.keys(item);
@@ -92,5 +99,15 @@ export const transformData = (data: IChartDataRequest): IItemResponse => {
     dataChart[index] = newObject;
   });
 
-  return { data: dataChart, keys };
+  const maxValueArray =
+    Number(
+      Math.max
+        .apply(
+          null,
+          lineChartData.map(item => Number(item.lineChart))
+        )
+        .toFixed(0)
+    ) + 10;
+
+  return { data: dataChart, keys, maxValueArray };
 };
