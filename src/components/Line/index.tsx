@@ -1,5 +1,5 @@
 import React from 'react';
-import { line } from 'd3-shape';
+import { line } from 'd3';
 
 import { dataRequest } from '../../constants';
 import { transformData } from '../../utils';
@@ -16,9 +16,11 @@ export const Line = function ({ bars, xScale, yScale }: any) {
   const barsFilter = bars.filter(
     (itemBar: { data: { id: string } }) => itemBar.data.id === keys[0]
   );
+
   const lineGenerator = line<IBar>()
     .x(bar => xScale(bar.data.indexValue) + bar.width / 2)
-    .y(bar => yScale(bar.data.data.lineChart));
+    .y(bar => yScale(bar.data.data.lineChart))
+    .defined((_, i) => i >= 12);
 
   return (
     <>
