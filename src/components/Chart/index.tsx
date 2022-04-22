@@ -8,14 +8,14 @@ import { Line } from '..';
 import { Container } from './styles';
 
 export const Chart: React.FC = function () {
-  const { data, keys } = transformData(dataRequest);
+  const { data, keys, maxValueArray } = transformData(dataRequest);
 
   return (
     <Container>
       <ResponsiveBar
         data={data}
         keys={keys}
-        maxValue={60}
+        maxValue={maxValueArray}
         padding={0.6}
         margin={{
           top: 10,
