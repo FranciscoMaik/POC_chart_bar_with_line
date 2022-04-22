@@ -30,6 +30,7 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@types/d3": "^7.1.0",
     "@types/d3-shape": "^3.0.2",
     "@types/node": "16.11.7",
     "@types/react": "17.0.35",
