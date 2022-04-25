@@ -1,5 +1,5 @@
 import React from 'react';
-import { line } from 'd3';
+import { line, curveNatural } from 'd3';
 
 import { dataRequest } from '../../constants';
 import { transformData } from '../../utils';
@@ -20,7 +20,8 @@ export const Line = function ({ bars, xScale, yScale }: any) {
   const lineGenerator = line<IBar>()
     .x(bar => xScale(bar.data.indexValue) + bar.width / 2)
     .y(bar => yScale(bar.data.data.lineChart))
-    .defined((_, i) => i >= 12);
+    .defined((_, i) => i >= 12)
+    .curve(curveNatural);
 
   return (
     <>
