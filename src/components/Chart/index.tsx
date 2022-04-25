@@ -2,13 +2,14 @@ import React from 'react';
 import { ResponsiveBar } from '@nivo/bar';
 
 import { dataRequest } from '../../constants';
-import { transformData } from '../../utils';
+import { transformData, testeFunctions } from '../../utils';
 import { Line } from '..';
 
 import { Container } from './styles';
 
 export const Chart: React.FC = function () {
   const { data, keys, maxValueArray } = transformData(dataRequest);
+  testeFunctions(dataRequest);
 
   return (
     <Container>
