@@ -22,6 +22,7 @@ export const ChartLine: React.FC = function () {
           right: 10,
           left: 36,
         }}
+        curve="natural"
         xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',
