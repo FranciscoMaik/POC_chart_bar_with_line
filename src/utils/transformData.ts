@@ -99,15 +99,26 @@ export const transformData = (data: IChartDataRequest): IItemResponse => {
     dataChart[index] = newObject;
   });
 
-  const maxValueArray =
-    Number(
-      Math.max
-        .apply(
-          null,
-          lineChartData.map(item => Number(item.lineChart))
-        )
-        .toFixed(0)
-    ) + 10;
+  const maxValueBar = Math.round(
+    Math.max(
+      ...dataChart.map(item => {
+        let total = 0;
+        Object.entries(item).forEach(([key, value]) => {
+          if (key !== 'lineChart' && key !== 'label') {
+            total += Number(value);
+          }
+        });
 
-  return { data: dataChart, keys, maxValueArray };
+        return total + 10;
+      })
+    )
+  );
+
+  const maxValueLine =
+    Math.round(Math.max(...lineChartData.map(item => Number(item.lineChart)))) +
+    10;
+
+  const maxValueChart = Math.max(maxValueBar, maxValueLine);
+
+  return { data: dataChart, keys, maxValueArray: maxValueChart };
 };
